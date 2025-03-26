@@ -121,12 +121,32 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     .check()
     .should('be.checked')
   })
-  it.only('marca cada tipo de antedimento', () => {
+  it('marca cada tipo de antedimento', () => {
     cy.get('input[type="radio"]')
      .each(typeOfService => {
        cy.wrap(typeOfService)
        .check()
        .should('be.checked')
      })
+  })
+
+  it('marca ambos checkboxes, depois desmarca o úiltimo', () => {
+    cy.get('input[type="checkbox"]')
+    .check()
+    .should('be.checked')
+    .last()
+    .uncheck()
+    .should('not.be.checked')
+  })
+  
+  it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.get('#firstName').type('Junior')
+    cy.get('#lastName').type('Gontijo')
+    cy.get('#email').type('junin_gym@hotmail,com')
+    cy.get('#open-text-area').type('Teste')
+    cy.get('#phone-checkbox').check()
+    cy.contains('button', 'Enviar').click()
+
+    cy.get('.error').should('be.visible')
   })
 })
