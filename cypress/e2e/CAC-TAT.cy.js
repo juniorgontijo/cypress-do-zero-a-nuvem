@@ -1,3 +1,4 @@
+const { expect } = require("chai")
 const { it } = require("mocha")
 
 describe('Central de Atendimento ao Cliente TAT', () => {
@@ -139,7 +140,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     .should('not.be.checked')
   })
   
-  it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+  it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
     cy.get('#firstName').type('Junior')
     cy.get('#lastName').type('Gontijo')
     cy.get('#email').type('junin_gym@hotmail,com')
@@ -149,4 +150,20 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.error').should('be.visible')
   })
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () =>{
+    cy.contains('a', 'Política de Privacidade')
+      .should('have.attr', 'href', 'privacy.html')
+      .and('have.attr', 'target', '_blank')
+  })
+   it('acessa a página da política de privacidade removendo o target e então clicando no link', () =>{
+    cy.contains('a', 'Política de Privacidade')
+      .invoke('removeAttr', 'target').click()
+
+      cy.contains('h1', 'CAC TAT - Política de Privacidade').should('be.visible')
+   })
+
+   it('testa a página da política de privacidade de forma independente', () =>{
+    
+      
+})
 })
