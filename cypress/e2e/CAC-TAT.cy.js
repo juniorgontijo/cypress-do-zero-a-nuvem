@@ -10,13 +10,17 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
   })
 
-  it('Preenche os campos obrigatórios e envia um formulário', () => {
+  it.only('Preenche os campos obrigatórios e envia um formulário', () => {
     const longText = Cypress._.repeat('abcdefghojklmnopqrstuvxyz', 100)
 
-    cy.get('#firstName').type('Junior')
-    cy.get('#lastName').type('Gontijo')
-    cy.get('#email').type('junin_gym@hotmail.com')
-    cy.get('#open-text-area').type(longText, { delay: 0 })
+    cy.get('#firstName')
+    .type('Junior')
+    cy.get('#lastName')
+    .type('Gontijo')
+    cy.get('#email')
+    .type('junin_gym@hotmail.com')
+    cy.get('#open-text-area')
+    .type(longText, { delay: 0 })
     cy.contains('button', 'Enviar').click()
 
     cy.get('.success').should('be.visible')
